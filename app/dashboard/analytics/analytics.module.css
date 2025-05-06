@@ -1,0 +1,181 @@
+.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: var(--textSoft);
+  }
+  
+  .actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  
+  .dateButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+  }
+  
+  .dateButton:hover {
+    background-color: var(--bgSoft);
+  }
+  
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .chartContainer {
+    background-color: var(--bgSoft);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .chartHeader {
+    margin-bottom: 20px;
+  }
+  
+  .chartTitle {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  
+  .chartSubtitle {
+    font-size: 14px;
+    color: var(--textSoft);
+  }
+  
+  .chart {
+    height: 400px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .chartPlaceholder {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg);
+    border-radius: 5px;
+    border: 1px dashed var(--bgSoft);
+  }
+  
+  .chartNote {
+    font-size: 14px;
+    color: var(--textSoft);
+    margin-top: 10px;
+  }
+  
+  .twoColumns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .efficiencyList {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .efficiencyList li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .colorBox {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+  }
+  
+  .metricsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .metricHeader {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  
+  .progressBar {
+    height: 8px;
+    background-color: var(--bgSoft);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .progress {
+    height: 100%;
+    background-color: var(--primary);
+    border-radius: 4px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+  
+    .twoColumns {
+      grid-template-columns: 1fr;
+    }
+  }
+  

@@ -1,0 +1,55 @@
+.container{
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.title{
+    margin-bottom: 20px;
+    font-weight: 200;
+    color: var(--textSoft);
+}
+
+.table{
+    width: 100%;
+    border: 1px solid var(--textSoft);
+    border-radius: 5px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.table td{
+    padding: 10px;
+    border-bottom: 1px solid var(--textSoft);
+    
+}
+.table tr:hover{
+    background-color: var(--hover);
+}
+.table thead{
+    color: var(--textSoft);
+    border-bottom: 1px solid var(--textSoft);
+}
+
+.status{
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    color: white;
+}
+
+.normal{
+    background-color: rgb(78, 155, 71);
+}
+
+.ypl{
+    background-color: rgb(227, 222, 100);
+}
+
+.opl{
+    background-color: rgb(202, 117, 56);
+}
+.rpl{
+    background-color: rgb(224, 55, 55);
+}

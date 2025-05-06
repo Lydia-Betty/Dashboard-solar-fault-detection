@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    gap: 50px;
+    margin-top: 20px;
+}
+.infoContainer {
+    flex: 1;
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: var(--textSoft);
+    height: max-content;
+}
+.formContainer {
+    flex: 3;
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form input,
+.form textarea {
+    padding: 20px;
+    border: 2px solid #74757a;
+    border-radius: 5px;
+    outline: none;
+    background-color: var(--hover);
+    color: var(--text);
+    margin: 10px 0px;
+}
+
+.form label {
+    font-size: 12px;
+}
+
+.form button {
+    width: 100%;
+    padding: 20px;
+    background-color: var(--hover);
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    margin-top: 20px;
+}

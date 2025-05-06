@@ -1,0 +1,230 @@
+.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .header {
+    margin-bottom: 10px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: var(--textSoft);
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid var(--bgSoft);
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--textSoft);
+    border-bottom: 2px solid transparent;
+  }
+  
+  .tab:hover {
+    color: var(--text);
+  }
+  
+  .activeTab {
+    color: var(--text);
+    border-bottom: 2px solid var(--primary);
+    font-weight: 500;
+  }
+  
+  .card {
+    background-color: var(--bgSoft);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .cardHeader {
+    padding: 20px;
+    border-bottom: 1px solid var(--bg);
+  }
+  
+  .cardTitle {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  
+  .cardSubtitle {
+    font-size: 14px;
+    color: var(--textSoft);
+  }
+  
+  .cardContent {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .cardFooter {
+    padding: 20px;
+    border-top: 1px solid var(--bg);
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .input,
+  .select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  
+  .input:focus,
+  .select:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+  
+  .button {
+    padding: 10px 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: var(--primaryHover);
+  }
+  
+  .button:disabled {
+    background-color: var(--bgSoft);
+    cursor: not-allowed;
+  }
+  
+  .outlineButton {
+    padding: 10px 16px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: transparent;
+    color: var(--text);
+    cursor: pointer;
+  }
+  
+  .outlineButton:hover {
+    background-color: var(--bgSoft);
+  }
+  
+  .switchItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .switchDescription {
+    font-size: 12px;
+    color: var(--textSoft);
+    margin-top: 2px;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bgSoft);
+    transition: .4s;
+    border-radius: 24px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: var(--hover);
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+  
+  .smallLabel {
+    font-size: 12px;
+  }
+  
+  .formHelp {
+    font-size: 12px;
+    color: var(--textSoft);
+    margin-top: 4px;
+  }
+  
+  .apiKeyContainer {
+    display: flex;
+    gap: 10px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .formGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .tabs {
+      flex-wrap: wrap;
+    }
+  
+    .apiKeyContainer {
+      flex-direction: column;
+    }
+  }
+  

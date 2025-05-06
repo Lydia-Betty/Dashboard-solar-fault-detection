@@ -1,0 +1,35 @@
+
+.form{
+    background-color: var(--bgSoft);
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+ }
+
+ .form input{
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #74757a;
+    border-radius: 5px;
+    background-color: var(--hover);
+    color: var(--text);
+    outline: none;
+
+}
+
+.form button{
+    width: 100%;
+    padding: 15px;
+    background-color: rgb(78, 155, 71);
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    outline: none;
+}

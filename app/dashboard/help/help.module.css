@@ -1,0 +1,286 @@
+.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .header {
+    margin-bottom: 10px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: var(--textSoft);
+  }
+  
+  .searchForm {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .searchInput {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  
+  .searchButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid var(--bgSoft);
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--textSoft);
+    border-bottom: 2px solid transparent;
+  }
+  
+  .tab:hover {
+    color: var(--text);
+  }
+  
+  .activeTab {
+    color: var(--text);
+    border-bottom: 2px solid var(--primary);
+    font-weight: 500;
+  }
+  
+  .card {
+    background-color: var(--bgSoft);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .cardHeader {
+    padding: 20px;
+    border-bottom: 1px solid var(--bg);
+  }
+  
+  .cardTitle {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  
+  .cardSubtitle {
+    font-size: 14px;
+    color: var(--textSoft);
+  }
+  
+  .cardContent {
+    padding: 20px;
+  }
+  
+  .faqList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .faqItem {
+    border-bottom: 1px solid var(--bg);
+    padding-bottom: 20px;
+  }
+  
+  .faqItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .faqQuestion {
+    font-weight: 500;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .faqAnswer {
+    font-size: 14px;
+    color: var(--textSoft);
+  }
+  
+  .bulletList {
+    list-style: none;
+    padding-left: 20px;
+    margin: 10px 0;
+  }
+  
+  .bulletList li {
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 15px;
+  }
+  
+  .bulletList li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+  }
+  
+  .normalText {
+    color: #137333;
+    font-weight: 500;
+  }
+  
+  .yellowText {
+    color: #b06000;
+    font-weight: 500;
+  }
+  
+  .orangeText {
+    color: #b45309;
+    font-weight: 500;
+  }
+  
+  .redText {
+    color: #c5221f;
+    font-weight: 500;
+  }
+  
+  .guidesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .linkList {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .linkList li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .blueCircle {
+    color: var(--primary);
+    font-size: 8px;
+  }
+  
+  .redCircle {
+    color: #c5221f;
+    font-size: 8px;
+  }
+  
+  .link {
+    color: var(--primary);
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  
+  .contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .input,
+  .textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  
+  .textarea {
+    resize: vertical;
+  }
+  
+  .submitButton {
+    padding: 10px 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  
+  .contactInfo {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--bg);
+  }
+  
+  .contactTitle {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+  
+  .contactMethods {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .contactMethod {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .contactIcon {
+    color: var(--textSoft);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .formGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .tabs {
+      flex-wrap: wrap;
+    }
+  }
+  

@@ -1,0 +1,24 @@
+:root{
+    --bg: 	#352F44 ;
+    --bgSoft: #5C5470;
+    /* --bgSoft: #5da58b; */
+    --hover: #B9B4C7;
+    --text: white;
+    --textSoft: #FAF0E6;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+a{
+    color: inherit;
+    text-decoration: none;
+}
