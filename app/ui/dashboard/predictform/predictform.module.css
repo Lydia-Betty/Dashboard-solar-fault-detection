@@ -1,0 +1,96 @@
+.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--bgSoft);
+    border-radius: 10px;
+  }
+
+  
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text);
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: var(--textSoft);
+  }
+ 
+
+  
+  .fileInputWrapper {
+    position: relative;
+  }
+  
+  .fileInput {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .fileButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .fileButton:hover {
+    background-color: var(--bgSoft);
+  }
+  
+  .fileName {
+    font-size: 14px;
+    color: var(--textSoft);
+    margin-top: 5px;
+  }
+  
+  .select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: var(--bg);
+    color: var(--text);
+    width: 100%;
+  }
+  
+  .predictButton {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--bgSoft);
+    background-color: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  
+  .predictButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .formContainer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .inputGroup {
+      width: 100%;
+    }
+  }
+  

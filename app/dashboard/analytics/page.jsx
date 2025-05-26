@@ -1,75 +1,144 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styles from "./analytics.module.css"
 import Card from "@/app/ui/dashboard/card/card"
+import Chart from "@/app/ui/dashboard/chart/chart"
 import { MdCalendarMonth } from "react-icons/md"
 
-// Sample data for analytics
-const monthlyData = [
-  { month: "Jan", production: 420, forecast: 450 },
-  { month: "Feb", production: 480, forecast: 500 },
-  { month: "Mar", production: 650, forecast: 630 },
-  { month: "Apr", production: 780, forecast: 800 },
-  { month: "May", production: 820, forecast: 850 },
-  { month: "Jun", production: 880, forecast: 900 },
-  { month: "Jul", production: 890, forecast: 920 },
-  { month: "Aug", production: 840, forecast: 870 },
-  { month: "Sep", production: 720, forecast: 750 },
-  { month: "Oct", production: 580, forecast: 600 },
-  { month: "Nov", production: 460, forecast: 480 },
-  { month: "Dec", production: 390, forecast: 410 },
+// If you want to show model accuracy metrics:
+const models = [
+  { id: "lstm",       name: "LSTM",       metrics: { accuracy: "92%" } },
+  { id: "bilstm",     name: "Bi-LSTM",    metrics: { accuracy: "94%" } },
+  { id: "transformer",name: "Transformer",metrics: { accuracy: "90%" } },
+  { id: "tft",        name: "TFT",        metrics: { accuracy: "95%" } },
 ]
 
 export default function AnalyticsPage() {
-  const [timeframe, setTimeframe] = useState("monthly")
+  const [predictions, setPredictions] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [timeframe, setTimeframe] = useState('week');
+  const [selectedModel, setSelectedModel] = useState("lstm")
+ 
+  useEffect(() => {
+      setIsLoading(true)
+      fetch("/api/predictions")
+        .then((res) => res.json())
+        .then((data) => {
+          setPredictions(data)
+          setIsLoading(false)
+        })
+        .catch((err) => {
+          console.error("Failed to load predictions:", err)
+          setIsLoading(false)
+        })
+    }, [])
+
+  // Build a time‑series chart (e.g., grouping by day or month)
+  // For example aggregate by date:
+      // Helper to compute average forecast per day (YYYY‑MM‑DD)
+  const dailyAverages = (() => {
+    const agg = {}
+    predictions.forEach((doc) => {
+      if (doc.modelName !== selectedModel) return
+      const day = new Date(doc.createdAt).toISOString().slice(0, 10)
+      agg[day] = agg[day] || { total: 0, count: 0 }
+      agg[day].total += doc.predictions[0]
+      agg[day].count += 1
+    })
+    return Object.entries(agg)
+      .map(([date, { total, count }]) => ({
+        date,
+        predicted: total / count,
+      }))
+      .sort((a, b) => (a.date > b.date ? 1 : -1))
+  })()
+
+  const getModelAccuracy = () => {
+    const m = models.find((m) => m.id === selectedModel)
+    return m?.metrics.accuracy || "N/A"
+  }
 
   return (
     <div className={styles.container}>
+
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Analytics</h1>
           <p className={styles.subtitle}>Analyze your PV system performance</p>
         </div>
-
+        
         <div className={styles.actions}>
-          <select className={styles.select} value={timeframe} onChange={(e) => setTimeframe(e.target.value)}>
-            <option value="hourly">Hourly</option>
+          <select
+            className={styles.select}
+            value={timeframe}
+            onChange={(e) => setTimeframe(e.target.value)}
+          >
             <option value="daily">Daily</option>
             <option value="monthly">Monthly</option>
           </select>
 
+          <select
+            className={styles.select}
+            value={selectedModel}
+            onChange={(e) => setSelectedModel(e.target.value)}
+          >
+            {models.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.name}
+              </option>
+            ))}
+          </select>
+
           <button className={styles.dateButton}>
             <MdCalendarMonth />
-            <span>Apr 24, 2025 - May 4, 2025</span>
+            <span>Last 30 Days</span>
           </button>
         </div>
       </div>
 
+      {/* KPIs */}
       <div className={styles.cards}>
-        <Card title="Total Production" value="7,842 kWh" change="+12%" positive={true} detail="from previous period" />
-        <Card
-          title="Average Daily Production"
-          value="21.5 kWh"
-          change="+5%"
-          positive={true}
-          detail="from previous period"
-        />
-        <Card title="Peak Production" value="4.8 kW" detail="On July 15th at 12:30" />
-        <Card title="Forecast Accuracy" value="91%" change="+5%" positive={true} detail="vs last week" />
+        <Card title="Total Predictions" value={predictions.length} detail="records stored" />
+        <Card title="Period" value={timeframe.charAt(0).toUpperCase() + timeframe.slice(1)} />
+        <Card title="Model Accuracy" value={getModelAccuracy()} />
+        <Card title="Selected Model" value={models.find((m) => m.id === selectedModel)?.name} />
       </div>
 
+      {/* Production vs. Forecast Chart */}
       <div className={styles.chartContainer}>
         <div className={styles.chartHeader}>
-          <h2 className={styles.chartTitle}>Production vs Forecast</h2>
-          <p className={styles.chartSubtitle}>Comparing actual production with forecasted values</p>
+          <h2 className={styles.chartTitle}>Average Forecast ({timeframe})</h2>
+          <p className={styles.chartSubtitle}>
+            {isLoading
+              ? "Loading prediction data..."
+              : dailyAverages.length
+              ? ""
+              : "No data available for this model"}
+          </p>
         </div>
         <div className={styles.chart}>
-          {/* This would be your chart component */}
-          <div className={styles.chartPlaceholder}>
-            <p>Chart showing {timeframe} production vs forecast data</p>
-            <p className={styles.chartNote}>Using your existing chart component</p>
-          </div>
+          {!isLoading && dailyAverages.length > 0 ? (
+            <Chart
+              predictions={dailyAverages.flatMap(d => {
+                // d.date = '2025-07-15'
+                return Array.from({ length: 24 }, (_, hour) => {
+                  const timestamp = new Date(`${d.date}T${hour.toString().padStart(2,'0')}:00:00Z`).toISOString()
+                  return {
+                    _id: `${d.date}-${hour}`, 
+                    createdAt: timestamp,
+                    predictedPV: d.predicted, // or however you want to interpolate
+                    predictions: [d.predicted],
+                    inputData: []
+                  }
+                })
+              })}
+            />
+          ) : (
+            <div className={styles.chartPlaceholder}>
+              <p>{isLoading ? "Loading..." : "No data to display"}</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -105,50 +174,37 @@ export default function AnalyticsPage() {
 
         <div className={styles.chartContainer}>
           <div className={styles.chartHeader}>
-            <h2 className={styles.chartTitle}>Performance Metrics</h2>
-            <p className={styles.chartSubtitle}>Key performance indicators</p>
+            <h2 className={styles.chartTitle}>Model Prediction Accuracy</h2>
+            <p className={styles.chartSubtitle}>Comparing different model performance</p>
           </div>
           <div className={styles.metricsContainer}>
-            <div className={styles.metric}>
-              <div className={styles.metricHeader}>
-                <span>Performance Ratio</span>
-                <span>87%</span>
+            {models.map((model) => (
+              <div key={model.id} className={styles.metric}>
+                <div className={styles.metricHeader}>
+                  <span>{model.name}</span>
+                  <span>{model.metrics ? model.metrics.accuracy : "N/A"}</span>
+                </div>
+                <div className={styles.progressBar}>
+                  <div
+                    className={styles.progress}
+                    style={{
+                      width: model.metrics ? model.metrics.accuracy : 0,
+                      backgroundColor:
+                        model.id === "lstm"
+                          ? "var(--primary)"
+                          : model.id === "bilstm"
+                          ? "var(--green)"
+                          : model.id === "transformer"
+                          ? "var(--purple)"
+                          : "var(--yellow)",
+                          }}
+                  ></div>
+                </div>
               </div>
-              <div className={styles.progressBar}>
-                <div className={styles.progress} style={{ width: "87%" }}></div>
-              </div>
-            </div>
+            ))}
 
-            <div className={styles.metric}>
-              <div className={styles.metricHeader}>
-                <span>Capacity Factor</span>
-                <span>22%</span>
-              </div>
-              <div className={styles.progressBar}>
-                <div className={styles.progress} style={{ width: "22%", backgroundColor: "var(--green)" }}></div>
-              </div>
-            </div>
+                </div>
 
-            <div className={styles.metric}>
-              <div className={styles.metricHeader}>
-                <span>Specific Yield</span>
-                <span>4.2 kWh/kWp</span>
-              </div>
-              <div className={styles.progressBar}>
-                <div className={styles.progress} style={{ width: "75%", backgroundColor: "var(--purple)" }}></div>
-              </div>
-            </div>
-
-            <div className={styles.metric}>
-              <div className={styles.metricHeader}>
-                <span>System Availability</span>
-                <span>99.7%</span>
-              </div>
-              <div className={styles.progressBar}>
-                <div className={styles.progress} style={{ width: "99.7%", backgroundColor: "var(--yellow)" }}></div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

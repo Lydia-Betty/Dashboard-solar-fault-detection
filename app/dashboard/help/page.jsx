@@ -101,7 +101,7 @@ export default function HelpPage() {
                 <div className={styles.faqItem}>
                   <div className={styles.faqQuestion}>How do I add new solar panels to the system?</div>
                   <div className={styles.faqAnswer}>
-                    You can add new solar panels by using the "Enter Custom Specs" option in the right sidebar of the
+                    You can add new solar panels by using the &quot;Enter Custom Specs&quot; option in the right sidebar of the
                     dashboard. Alternatively, you can go to Settings &gt; System Configuration to set up your default
                     panel configuration.
                   </div>
@@ -132,7 +132,7 @@ export default function HelpPage() {
                 <div className={styles.faqItem}>
                   <div className={styles.faqQuestion}>How can I export my data?</div>
                   <div className={styles.faqAnswer}>
-                    You can export your data by clicking the "Export" button in the top right corner of most data views.
+                    You can export your data by clicking the &quot;Export&quot; button in the top right corner of most data views.
                     The system supports CSV, Excel, and JSON formats. For API access to your data, go to Settings &gt;
                     API Access.
                   </div>
@@ -141,7 +141,7 @@ export default function HelpPage() {
                 <div className={styles.faqItem}>
                   <div className={styles.faqQuestion}>How do I add new users to the system?</div>
                   <div className={styles.faqAnswer}>
-                    Administrators can add new users by navigating to the Users page and clicking the "Add New" button.
+                    Administrators can add new users by navigating to the Users page and clicking the &quot;Add New&quot; button.
                     You can set user permissions and roles during the creation process.
                   </div>
                 </div>

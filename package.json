@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@next/eslint-plugin-next": "14.0.1",
+    "@tensorflow/tfjs-node": "^4.22.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
+    "danfojs": "^1.2.0",
     "dotenv": "^16.5.0",
     "mongodb": "^6.16.0",
     "mongoos": "^0.0.1-security",
@@ -21,6 +23,7 @@
     "react": "18",
     "react-dom": "18",
     "react-icons": "^4.11.0",
+    "react-papaparse": "^4.4.0",
     "recharts": "^2.15.2",
     "use-debounce": "^9.0.4"
   },

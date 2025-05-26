@@ -7,6 +7,8 @@ import { redirect } from "next/navigation"
 import bcrypt from "bcryptjs"
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { signIn } from 'next-auth/react';
+
 
 
 export const addUser = async (formData) => {
