@@ -1,7 +1,7 @@
 import styles from "./recentpredictions.module.css"
 
 
-const Recentpredictions = ({ predictions }) => {
+export default function Recentpredictions ({ predictions=[] }) {
     if (!predictions) return <div>No data available</div>;
     return (
         <div className={styles.container}>
@@ -12,20 +12,26 @@ const Recentpredictions = ({ predictions }) => {
                         <td>ID</td>
                         <td>Timestamp</td>
                         <td>Irradiation</td>
-                        <td>PV Power (kWh)</td>
+                        <td>PV Power (Wh)</td>
                         <td>Alerts</td>
                     </tr>
                 </thead>
                 <tbody>
-                    {predictions.map((item, index) => {
-                        const irradiance = item.predictions[0] ?? 0
-                        const pvKilowatt = item.predictedPV ?? 0
+                    {predictions.map((item, idx) => {
+                        const irr = (item.predictions?.[0] ?? 0).toFixed(3);
+                        const pv  = (item.predictedPV ?? 0).toFixed(2);
+                        const dt  = new Date(item.createdAt).toLocaleString(undefined, {
+                        year: "numeric",
+                        month:"2-digit",
+                        day:  "2-digit",
+                        hour: "2-digit",
+                        minute:"2-digit" })
 
-                        const level = pvKilowatt < 1.2
+                        const level = pv< 1.2
                         ? "RPL"
-                        : pvKilowatt < 2.8
+                        : pv < 2.8
                         ? "OPL"
-                        : pvKilowatt < 5.1
+                        : pv < 5.1
                         ? "YPL"
                         : "Normal"
 
@@ -39,11 +45,11 @@ const Recentpredictions = ({ predictions }) => {
                             : "Normal"
 
                         return (
-                        <tr key={item._id || index}>
+                        <tr key={item._id || idx}>
                             <td>{String(item._id || "").slice(-4)}</td>
-                            <td>{new Date(item.createdAt).toLocaleDateString(undefined, {year: "numeric",month: "2-digit",day: "2-digit",hour: "2-digit",minute: "2-digit",})}</td>
-                            <td>{irradiance.toFixed(3)}</td>
-                            <td>{pvKilowatt.toFixed(2)}</td> {/* new PV column */}
+                            <td>{dt}</td>
+                            <td>{irr}</td>
+                            <td>{pv}</td> 
                             <td>
                                 <span className={`${styles.status} ${styles[level.toLowerCase()]}`}>
                                     {levelLabel}
@@ -57,5 +63,3 @@ const Recentpredictions = ({ predictions }) => {
         </div>
     )
 }
-
-export default Recentpredictions

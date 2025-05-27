@@ -1,10 +1,10 @@
 :root{
-    --bg: 	#352F44 ;
-    --bgSoft: #5C5470;
+    --bg: 	#f0f1fd;
+    --bgSoft: #dadeeb;
     /* --bgSoft: #5da58b; */
-    --hover: #B9B4C7;
-    --text: white;
-    --textSoft: #FAF0E6;
+    --hover: #c4c9e0;
+    --text: rgb(55, 58, 120);
+    --textSoft: #6174ba;
 }
 
 *{

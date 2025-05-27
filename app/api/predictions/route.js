@@ -17,19 +17,15 @@ export async function POST(request) {
     const inserted = await Prediction.insertMany(docs);
     
     // 2) Count total docs
-    const total = await Prediction.countDocuments();
-    const maxKeep = 100;
-
-    if (total > maxKeep) {
-      // find the _id of the (total-maxKeep)th oldest doc
-      const docsToDelete = await Prediction.find({})
+    const count = await Prediction.countDocuments();
+    if (count > 100) {
+      const toDelete = await Prediction
+        .find({})
         .sort({ createdAt: 1 })      // oldest first
-        .limit(total - maxKeep)
-        .select('_id')
+        .limit(count - 100)
+        .select("_id")
         .lean();
-
-      const ids = docsToDelete.map((d) => d._id);
-      // delete them in bulk
+      const ids = toDelete.map(d => d._id);
       await Prediction.deleteMany({ _id: { $in: ids } });
     }
 
@@ -49,7 +45,7 @@ export async function POST(request) {
 export async function GET() {
   try {
     await connectToDB();
-    const all = await Prediction.find().sort({ createdAt: -1 }).limit(100);
+    const all = await Prediction.find().sort({ createdAt: -1 }).limit(100).lean();
     return new Response(JSON.stringify(all), {
       status: 200,
       headers: { "Content-Type": "application/json" },

@@ -37,11 +37,8 @@ const Dashboard=()=>  {
 
   useEffect(() => {
     fetch("/api/predictions")
-      .then((r) => r.json())
-      .then((data) => {
-        // data should be array of docs with predictedPV & alert
-        setBatch(data);
-      })
+      .then(r => r.json())
+      .then(setBatch)
       .catch(console.error);
   }, []);
 
@@ -53,10 +50,11 @@ const Dashboard=()=>  {
   // on new predictions, stitch together the payload your child comps expect
   const handleNewPredictions = async ({ modelType, dayAhead, createdAt}) => {
     const docs = dayAhead.map((irr, i) => {
-      const { totalArea, efficiency } = specs
+       // clamp tiny irradiance at night to zero
+      const clippedIrr = irr < 1e-3 ? 0 : irr;
 
       // compute PV power
-      const predictedPV = irr * totalArea * efficiency;
+      const predictedPV = clippedIrr * specs.totalArea * specs.efficiency;
       // compute alert level
       let alert = "Normal";
       if (irr < 1.2) alert = "RPL";
@@ -71,7 +69,7 @@ const Dashboard=()=>  {
       return {
         modelName: modelType,
         createdAt: ts,
-        predictions: [irr],
+        predictions: [clippedIrr],
         predictedPV,
         alert,
       };
@@ -81,11 +79,12 @@ const Dashboard=()=>  {
       // 1) Save into MongoDB
       await saveEnrichedDocs(docs);
 
-      setBatch((prev) => {
-        return [...docs, ...prev]
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 100);
-      });
+            // locally prepend and keep most recent 100
+      setBatch(prev =>
+        [ ...docs, ...prev ]
+          .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 100)
+      );
 
       console.log({ modelType, dayAhead, specs });
 
@@ -109,16 +108,9 @@ const Dashboard=()=>  {
                 <PredictForm
                     onPredictionComplete={handleNewPredictions}
                 />
-                {!specsReady && (
-                  <div style={{ color: "orange", margin: "1rem 0" }}>
-                    Please select a panel on the right to enable PV power plotting.
-                  </div>
-                )}
-
-                
                 {specsReady
                   ? <Chart predictions={batch}/>
-                  : <div style={{ margin: "2rem", color: "#888" }}>
+                  : <div style={{ margin: "2rem", color: "orange" }}>
                       Chart will appear once panel specs are set.
                     </div>
                 }
