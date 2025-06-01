@@ -28,12 +28,32 @@ const Dashboard=()=>  {
   const [batch, setBatch] = useState([])
 
   // 2) Panel specs from the right side (area per panel, efficiency, count, totalArea)
-  const [specs, setSpecs] = useState({
-    area: 0,
-    efficiency: 0,
-    numberOfPanels: 0,
-    totalArea: 0,
-  })
+  const [specs, setSpecs] = useState(() => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("panelSpecs");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+            // if parsing fails, fall back to defaults
+          }
+        }
+      }
+      return {
+        area: 0,
+        efficiency: 0,
+        numberOfPanels: 0,
+        totalArea: 0,
+      };
+    });
+
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("panelSpecs", JSON.stringify(specs));
+      }
+    }, [specs]);
+
+
 
   useEffect(() => {
     fetch("/api/predictions")
@@ -46,6 +66,7 @@ const Dashboard=()=>  {
   const onSpecsChange = (newSpecs) => {
     setSpecs(newSpecs)
   }
+  
 
   // on new predictions, stitch together the payload your child comps expect
   const handleNewPredictions = async ({ modelType, dayAhead, createdAt}) => {
@@ -97,13 +118,92 @@ const Dashboard=()=>  {
   const specsReady = specs.totalArea > 0 && specs.efficiency > 0
   
 
+
+const computeTomorrowYield = () => {
+  if (!batch || batch.length < 24 || !specsReady) return 0;
+
+  // We assume batch[0..23] are the 24 hourly docs from the latest forecast time
+  // (Ensure that your `setBatch` always prepends new docs in chronological order.)
+  const latest24 = batch.slice(0, 24);
+  // Sum predictedPV across those 24 docs:
+  const total = latest24.reduce((acc, d) => acc + (d.predictedPV || 0), 0);
+  const totalKWh = total / 1000
+  // Round to one decimal if you like:
+  return Math.round(totalKWh * 10) / 10;
+};
+const tomorrowYield = computeTomorrowYield();
+
+const computeAlertFrequencies = () => {
+  if (!batch || batch.length === 0) return { RPL: 0, OPL: 0, YPL: 0, Normal: 0 };
+
+  const now = new Date();
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+  const recent = batch.filter((d) => new Date(d.createdAt) >= sevenDaysAgo);
+  const counts = { RPL: 0, OPL: 0, YPL: 0, Normal: 0 };
+  for (let doc of recent) {
+    if (doc.alert === "RPL") counts.RPL++;
+    else if (doc.alert === "OPL") counts.OPL++;
+    else if (doc.alert === "YPL") counts.YPL++;
+    else if (doc.alert === "Normal") counts.Normal++;
+  }
+  return counts;
+};
+const alertCounts = computeAlertFrequencies();
+
+ const [dailyError, setDailyError] = useState(null);
+
+  useEffect(() => {
+    // We only need to load once or whenever batch changes (if you want to recompute)
+    async function loadError() {
+      try {
+        // Replace with your real fetch:
+        // const resp = await fetch("/api/observations?date=yesterday");
+        // const actuals = await resp.json();
+        // Compute MAE, RMSE, etc. vs batch’s “yesterday’s forecast”.
+
+        // For now, use dummy values:
+        const summary = { MAE: 12.3, RMSE: 18.7, MAPE: 15.2 };
+        setDailyError(summary);
+      } catch (err) {
+        console.error("Could not load daily error:", err);
+      }
+    }
+    loadError();
+  }, [batch]);
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.main}>
                 <div className={styles.cards}>
-                    <Card/>
-                    <Card/>
-                    <Card/>
+                    <Card
+                      title="Tomorrow’s PV Yield"
+                      value={tomorrowYield}
+                      unit="kWh"
+                      deltaText=""               // no “vs last week” needed here
+                      deltaIsPositive={true}
+                    />
+                    <Card
+                      title="This Week’s Alerts"
+                      value={
+                        <>
+                          <span className={styles.alertR}>RPL:{alertCounts.RPL}</span>
+                          <span className={styles.alertO}>OPL:{alertCounts.OPL}</span>
+                          <span className={styles.alertY}>YPL:{alertCounts.YPL}</span>
+                          <span className={styles.alertNormal}>N:{alertCounts.Normal}</span>
+                        </>
+                      }
+                      unit=""
+                      deltaText=""               // no “vs last week” needed here
+                      deltaIsPositive={true}
+                    />
+                    <Card
+                      title="Yesterday’s Mean Absolut Error"
+                      value={dailyError ? dailyError.MAE.toFixed(1) : "–"}
+                      unit="W/m²"
+                      deltaText=""               // no “vs last week” needed here
+                      deltaIsPositive={true}
+                    />
                 </div>
                 <PredictForm
                     onPredictionComplete={handleNewPredictions}

@@ -8,10 +8,10 @@ import { MdCalendarMonth } from "react-icons/md"
 
 // If you want to show model accuracy metrics:
 const models = [
-  { id: "lstm",       name: "LSTM",       metrics: { accuracy: "92%" } },
-  { id: "bilstm",     name: "Bi-LSTM",    metrics: { accuracy: "94%" } },
-  { id: "transformer",name: "Transformer",metrics: { accuracy: "90%" } },
-  { id: "tft",        name: "TFT",        metrics: { accuracy: "95%" } },
+  { id: "lstm",       name: "LSTM",       metrics: { accuracy: "77%" } },
+  { id: "bilstm",     name: "Bi-LSTM",    metrics: { accuracy: "78%" } },
+  { id: "transformer",name: "Transformer",metrics: { accuracy: "96%" } },
+  { id: "tft",        name: "TFT",        metrics: { accuracy: "78%" } },
 ]
 
 export default function AnalyticsPage() {

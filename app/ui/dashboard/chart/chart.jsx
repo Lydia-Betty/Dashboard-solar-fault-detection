@@ -44,7 +44,7 @@ export default function Chart ({ predictions=[] }){
               <LineChart data={data} className={styles.chart}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis stroke="rgb(55, 58, 120)" dataKey="label" angle={-45} textAnchor="end" height={50} fontSize={7} interval={0} />
-                <YAxis stroke="rgb(55, 58, 120)" fontSize={7} label={{ value: 'PV Power (kWh)', angle: -90, position: 'insideLeft', style: { fill: 'white', fontSize: 10 }}} />
+                <YAxis stroke="rgb(55, 58, 120)" fontSize={7} label={{ value: 'PV Power (Wh)', angle: -90, position: 'insideLeft', style: { fill: 'rgb(55, 58, 120)', fontSize: 10 }}} />
                 <Tooltip
                   contentStyle={{ background: "#A5BFCC", border: "none" }}
                   labelFormatter={l => `Time: ${l}`}

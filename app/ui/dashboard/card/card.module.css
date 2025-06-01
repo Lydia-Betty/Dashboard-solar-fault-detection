@@ -20,6 +20,11 @@
     font-size: 24px;
     font-weight: 500;
 }
+.unit {
+  font-size: 0.875rem;
+  margin-left: 0.25rem;
+  color: #888;
+}
 .detail{
     font-size: 14px;
     font-weight: 300;

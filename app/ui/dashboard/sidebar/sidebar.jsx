@@ -91,9 +91,9 @@ const Sidebar = () => {
           width="50"
           height="50"
         />
-        <div className={styles.userDetail}>
-          <span className={styles.username}>{session.user.name}</span>
-          <span className={styles.userTitle}>{session.user.isAdmin ? 'Administrator' : 'User'}</span>
+        <div className={styles.userDetails}>
+          <span className={styles.userName}>{session.user.name}</span>
+          <span className={styles.userTitle}>{session.user.isAdmin ? 'Admin' : 'User'}</span>
         </div>
       </div>
       <ul className={styles.list}>

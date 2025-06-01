@@ -11,7 +11,7 @@ export default function Recentpredictions ({ predictions=[] }) {
                     <tr>
                         <td>ID</td>
                         <td>Timestamp</td>
-                        <td>Irradiation</td>
+                        <td>Irradiation (W/m²)</td>
                         <td>PV Power (Wh)</td>
                         <td>Alerts</td>
                     </tr>

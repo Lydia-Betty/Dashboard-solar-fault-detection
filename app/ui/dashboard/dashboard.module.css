@@ -33,3 +33,28 @@
 .side{
     flex: 1;
 }
+
+.alertR {
+  color: rgb(224, 55, 55);
+  margin: 5px;
+  font-size: 20px
+}
+
+.alertO {
+  color: rgb(202, 117, 56);
+  margin: 5px;
+  font-size: 20px
+}
+
+.alertY {
+  color: rgb(227, 222, 100);
+  margin: 5px;
+  font-size: 20px
+}
+
+.alertNormal {
+  color: rgb(78, 155, 71);
+  margin: 5px;
+  font-size: 20px
+}
+
