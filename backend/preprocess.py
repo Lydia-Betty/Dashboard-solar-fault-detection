@@ -37,9 +37,6 @@ def preprocess(file_path, model_type):
         df.set_index("date", inplace=True)
         df.drop(columns=["year", "month", "day", "hour"], inplace=True)
 
-        # Create timestamp feature (do NOT include in scaling)
-        date_ts = df.index.astype(np.int64) // 10**9
-
         df.replace([-999], np.nan, inplace=True)
         df.ffill(inplace=True)
         df.bfill(inplace=True)
@@ -63,17 +60,7 @@ def preprocess(file_path, model_type):
         scaler_params = load_scaler(model_type)
         scaled_data = min_max_scale(df.values, scaler_params)
 
-                # Scale date_ts to 0-1 range and combine with scaled meteorological features
-        date_array = date_ts.values.astype(np.float64)
-            # ensure no NaNs in date_array by filling if any
-        if np.isnan(date_array).any():
-            date_array = pd.Series(date_array).fillna(method='ffill').fillna(method='bfill').values
-        date_scaled = (date_array - date_array.min()) / (date_array.max() - date_array.min() + 1e-8)
-        date_col = date_scaled.reshape(-1,1)
-        full_data = np.hstack([scaled_data, date_col]) 
-            # verify no NaNs
-        if np.isnan(full_data).any():
-            full_data = np.nan_to_num(full_data, nan=0.0, posinf=0.0, neginf=0.0)
+        full_data = scaled_data
 
         X = create_sequences(full_data, LOOKBACK)
 

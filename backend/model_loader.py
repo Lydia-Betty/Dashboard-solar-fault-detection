@@ -9,6 +9,6 @@ def load_model_for_type(model_type):
     }
 
     with tf.keras.utils.custom_object_scope(custom_objects):
-        return load_model(f'models/{model_type}/model.keras')
+        return load_model(f'models/{model_type}/model_{model_type}.keras')
 
 
