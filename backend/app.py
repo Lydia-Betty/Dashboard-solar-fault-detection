@@ -195,7 +195,7 @@ def fetch_nasa_last(lat: float, lon: float) -> pd.DataFrame:
 
     def force_night_to_zero(row):
         hour_utc = row.name.hour
-        if (hour_utc < 5) or (hour_utc > 18):
+        if (hour_utc < 4) or (hour_utc > 20):
             return 0.0
         else:
             return row["allsky_sfc_sw_dwn"]
@@ -339,8 +339,12 @@ def predict():
     # 5.2B) If mode="nasa": fetch the last 15 valid hours from NASA
     # -----------------------------------------------------------------------------------
     else:
+        lat = request.form.get("lat", type=float)
+        lon = request.form.get("lon", type=float)
+        if lat is None or lon is None:
+            return jsonify({"error": "Missing latitude/longitude for NASA mode"}), 400
         try:
-            history_df = fetch_nasa_last(28.0339, 1.6596)
+            history_df = fetch_nasa_last(lat, lon)
             # Debug prints (you can remove these in production):
             print("⏰ timestamps:", history_df.index)
             print("☀️ allsky:", history_df["allsky_sfc_sw_dwn"].values)

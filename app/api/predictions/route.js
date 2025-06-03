@@ -1,6 +1,6 @@
 import {connectToDB} from "@/app/lib/utils";
 import { Prediction } from "@/app/lib/models";
-
+ 
 export async function POST(request) {
   try {
     await connectToDB();
