@@ -66,7 +66,9 @@ export default function PredictForm({ onPredictionComplete }) {
         if (typeof lat === 'number' && typeof lng === 'number') {
           setCoords({ lat, lng })
         }
-      } catch {}
+      } catch {
+        //no
+        }
     }
   }, [])
 
