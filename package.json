@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/react-wrapper": "^1.2.0",
     "@next/eslint-plugin-next": "14.0.1",
     "@tensorflow/tfjs-node": "^4.22.0",
     "bcrypt": "^5.1.1",
