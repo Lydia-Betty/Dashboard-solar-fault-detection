@@ -109,7 +109,7 @@ export default function PredictForm({ onPredictionComplete }) {
         formData.append('lat', coords.lat.toString())
         formData.append('lon', coords.lng.toString())
       }
-      const res = await fetch('${process.env.NEXT_PUBLIC_FLASK_API}/predict', { method: 'POST', body: formData })
+      const res = await fetch(`${process.env.NEXT_PUBLIC_FLASK_API}/predict`, { method: 'POST', body: formData })
       if (!res.ok) throw new Error(await res.text())
       const { day_ahead } = await res.json()
       onPredictionComplete({ modelType, SingleStep: day_ahead[0], dayAhead: day_ahead, createdAt: new Date().toISOString(), fileData: mode === 'upload' ? fileData : null, coords })
