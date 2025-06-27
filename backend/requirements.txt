@@ -5,3 +5,4 @@ numpy
 pymongo
 gunicorn
 pandas
+pvlib
