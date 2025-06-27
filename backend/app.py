@@ -13,7 +13,7 @@ from pvlib.location import Location
 from model_loader import load_model_for_type
 
 app = Flask(__name__)
-CORS(app, origins=["https://dashboard-solar-fault-detection.vercel.app"], supports_credentials=True,)
+CORS(app, origins="*", supports_credentials=True,)
 
 UPLOAD_FOLDER = "temp_uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
