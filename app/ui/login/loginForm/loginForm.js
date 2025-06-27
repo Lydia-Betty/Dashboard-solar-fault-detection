@@ -17,7 +17,9 @@ export default function LoginForm() {
     const result = await signIn("credentials", {
       username: formData.get("username"),
       password: formData.get("password"),
-      redirect: false
+      // redirect: false
+      redirect: true,            // ← let NextAuth redirect for us
+      callbackUrl: "/dashboard", // ← and send us here when done
     });
 
     if (result?.error) {
